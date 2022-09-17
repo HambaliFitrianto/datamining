@@ -1,4 +1,4 @@
-# Pustaka Python
+# PUSTAKA PYTHON
 
 - NumPy
 
