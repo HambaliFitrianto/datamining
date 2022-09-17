@@ -15,6 +15,6 @@
 # Dosen Pengampu : MULA'AB, S.Si., M.Kom
 
 - Nama : Hambali Fitrianto
-- Nim  : 200411100074
-- Kelas: Penambangan Data C
-- Prodi: Teknik Informatika
+- Nim    : 200411100074
+- Kelas  : Penambangan Data C
+- Prodi  : Teknik Informatika
