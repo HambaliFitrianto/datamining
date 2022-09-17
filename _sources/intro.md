@@ -18,15 +18,15 @@ Data mining adalah proses pengumpulan dan pengolahan data yang bertujuan untuk m
 
 Setipa proses dari data mining memiliki tujuannya masing-masing, berikut ini tujuan yang terdapat pada data mining:
 
-1. Explanatory (Sarana Penjelasan)
+- Explanatory (Sarana Penjelasan)
 
 Data mining adalah sebuah sarana untuk menjelaskan suatu kondisi. Sebagai contoh nyata yaitu mengapa harga  penjualan masker di Indonesia meningkat. Tentu saja dalam mengetahui alasannya, diperlukan kumpulan data yang diperoleh dari hasil data mining.
 
-2. Confirmatory (Konfirmasi)
+- Confirmatory (Konfirmasi)
 
 Data mining adalah sebuah sarana untuk mengklarifikasi sebuah pernyataan atau mempertegas adanya hipotesa. Contohnya adalah orang dengan tingkat ekonomi menengah keatas lebih suka membeli mobil daripada membeli unit sepeda motor.
 
-3. Exploratory (Eksplorasi)
+- Exploratory (Eksplorasi)
 
 Data mining adalah suatu sarana yang dapat digunakan untuk mencari pola baru yang sebelumnya tidak terdeteksi. Contohnya adalah pola terkait alasan mengapa seorang pelaku pembunuhan menargetkan orang yang tinggal di apartemen seorang diri (walau korban tidak terikat hubungan kontak apapun dengan pelaku).
 
