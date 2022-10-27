@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>K-Means &#8212; Hambali Fitrianto</title>
+    <title>Categorical to Numeric &#8212; Hambali Fitrianto</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,8 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Discision Tree" href="Discision%20Tree.html" />
-    <link rel="prev" title="Naive Bayes Classifer" href="Naive%20Bayes%20Classifer.html" />
+    <link rel="prev" title="Uts" href="Uts.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -156,8 +155,8 @@ const thebe_selector_output = ".output, .cell_output"
    Naive Bayes Classifer
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="K-Means.html">
    K-Means
   </a>
  </li>
@@ -171,8 +170,8 @@ const thebe_selector_output = ".output, .cell_output"
    Uts
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Categorical%20to%20numeric.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Categorical to Numeric
   </a>
  </li>
@@ -235,7 +234,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://colab.research.google.com/github/HambaliFitrianto/datamining/blob/gh-pages/_sources/K-Means.ipynb"
+        <a href="https://colab.research.google.com/github/HambaliFitrianto/datamining/blob/gh-pages/_sources/Categorical to numeric.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -295,7 +294,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/HambaliFitrianto/datamining/issues/new?title=Issue%20on%20page%20%2FK-Means.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/HambaliFitrianto/datamining/issues/new?title=Issue%20on%20page%20%2FCategorical to numeric.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -323,7 +322,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/K-Means.ipynb"
+        <a href="_sources/Categorical to numeric.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -372,7 +371,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>K-Means</h1>
+                <h1>Categorical to Numeric</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -384,39 +383,33 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="k-means">
-<h1>K-Means<a class="headerlink" href="#k-means" title="Permalink to this headline">#</a></h1>
-<p>Import Library</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="categorical-to-numeric">
+<h1>Categorical to Numeric<a class="headerlink" href="#categorical-to-numeric" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># linear algebra</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># data processing, CSV file I/O (e.g. pd.read_csv)</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> <span class="c1"># for data visualization</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># for statistical data visualization</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Import Dataset</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/HambaliFitrianto/datamining/main/credit_score.csv&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">dataset_url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Exploratory data analysis</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-ae02eb61-a160-437f-9ae8-e1db398909c8">
+  <div id="df-35d4c8e6-6c5f-4a50-b142-37553ea2d46f">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -436,58 +429,76 @@ title="Print to PDF"
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sepal.length</th>
-      <th>sepal.width</th>
-      <th>petal.length</th>
-      <th>petal.width</th>
-      <th>variety</th>
+      <th>Unnamed: 0</th>
+      <th>kode_kontrak</th>
+      <th>pendapatan_setahun_juta</th>
+      <th>kpr_aktif</th>
+      <th>durasi_pinjaman_bulan</th>
+      <th>jumlah_tanggungan</th>
+      <th>rata_rata_overdue</th>
+      <th>risk_rating</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>5.1</td>
-      <td>3.5</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>Setosa</td>
+      <td>1</td>
+      <td>AGR-000001</td>
+      <td>295</td>
+      <td>YA</td>
+      <td>48</td>
+      <td>5</td>
+      <td>61 - 90 days</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>4.9</td>
-      <td>3.0</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>Setosa</td>
+      <td>2</td>
+      <td>AGR-000011</td>
+      <td>271</td>
+      <td>YA</td>
+      <td>36</td>
+      <td>5</td>
+      <td>61 - 90 days</td>
+      <td>4</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>4.7</td>
-      <td>3.2</td>
-      <td>1.3</td>
-      <td>0.2</td>
-      <td>Setosa</td>
+      <td>3</td>
+      <td>AGR-000030</td>
+      <td>159</td>
+      <td>TIDAK</td>
+      <td>12</td>
+      <td>0</td>
+      <td>0 - 30 days</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>4.6</td>
-      <td>3.1</td>
-      <td>1.5</td>
-      <td>0.2</td>
-      <td>Setosa</td>
+      <td>4</td>
+      <td>AGR-000043</td>
+      <td>210</td>
+      <td>YA</td>
+      <td>12</td>
+      <td>3</td>
+      <td>46 - 60 days</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>5.0</td>
-      <td>3.6</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>Setosa</td>
+      <td>5</td>
+      <td>AGR-000049</td>
+      <td>165</td>
+      <td>TIDAK</td>
+      <td>36</td>
+      <td>0</td>
+      <td>31 - 45 days</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-ae02eb61-a160-437f-9ae8-e1db398909c8')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-35d4c8e6-6c5f-4a50-b142-37553ea2d46f')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -538,12 +549,12 @@ title="Print to PDF"
 
       <script>
         const buttonEl =
-          document.querySelector('#df-ae02eb61-a160-437f-9ae8-e1db398909c8 button.colab-df-convert');
+          document.querySelector('#df-35d4c8e6-6c5f-4a50-b142-37553ea2d46f button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-ae02eb61-a160-437f-9ae8-e1db398909c8');
+          const element = document.querySelector('#df-35d4c8e6-6c5f-4a50-b142-37553ea2d46f');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -564,45 +575,29 @@ title="Print to PDF"
   </div>
 </div></div>
 </div>
-<p><strong>Declare feature vector and target variable</strong></p>
-<p>Convert categorical variable into integers</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span>
-
-<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;variety&quot;</span><span class="p">]</span>
-
-<span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
-
-<span class="n">X</span><span class="p">[</span><span class="s1">&#39;variety&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;variety&#39;</span><span class="p">])</span>
-
-<span class="n">y</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-
-<span class="n">y</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_asli</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;kpr_aktif&#39;</span><span class="p">,</span> <span class="s1">&#39;rata_rata_overdue&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_kpr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;kpr_aktif&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_kpr</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-1c8ee8fb-ff01-476f-904d-cbee85385e86">
+  <div id="df-8859ebf3-6116-43fa-8a06-bb375b3cb1f7">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -622,58 +617,114 @@ title="Print to PDF"
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sepal.length</th>
-      <th>sepal.width</th>
-      <th>petal.length</th>
-      <th>petal.width</th>
-      <th>variety</th>
+      <th>kpr_aktif</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>5.1</td>
-      <td>3.5</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>0</td>
+      <td>YA</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>4.9</td>
-      <td>3.0</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>0</td>
+      <td>YA</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>4.7</td>
-      <td>3.2</td>
-      <td>1.3</td>
-      <td>0.2</td>
-      <td>0</td>
+      <td>TIDAK</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>4.6</td>
-      <td>3.1</td>
-      <td>1.5</td>
-      <td>0.2</td>
-      <td>0</td>
+      <td>YA</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>5.0</td>
-      <td>3.6</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>0</td>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>YA</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>TIDAK</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>TIDAK</td>
     </tr>
   </tbody>
 </table>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-1c8ee8fb-ff01-476f-904d-cbee85385e86')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-8859ebf3-6116-43fa-8a06-bb375b3cb1f7')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -724,12 +775,12 @@ title="Print to PDF"
 
       <script>
         const buttonEl =
-          document.querySelector('#df-1c8ee8fb-ff01-476f-904d-cbee85385e86 button.colab-df-convert');
+          document.querySelector('#df-8859ebf3-6116-43fa-8a06-bb375b3cb1f7 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-1c8ee8fb-ff01-476f-904d-cbee85385e86');
+          const element = document.querySelector('#df-8859ebf3-6116-43fa-8a06-bb375b3cb1f7');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -750,41 +801,22 @@ title="Print to PDF"
   </div>
 </div></div>
 </div>
-<p><strong>Feature Scaling</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cols</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kpr_aktif</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data_kpr</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-
-<span class="n">ms</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">ms</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">cols</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kpr_aktif</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-da7bd885-ec9e-4d1f-8d6b-c570158a8980">
+  <div id="df-f595d2d2-5417-4adc-91a5-14c0e3bf4ef1">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -796,115 +828,79 @@ title="Print to PDF"
         vertical-align: top;
     }
 
-    .dataframe thead tr th {
-        text-align: left;
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
-    <tr>
+    <tr style="text-align: right;">
       <th></th>
-      <th>sepal.length</th>
-      <th>sepal.width</th>
-      <th>petal.length</th>
-      <th>petal.width</th>
-      <th>variety</th>
+      <th>kpr_aktif_TIDAK</th>
+      <th>kpr_aktif_YA</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.222222</td>
-      <td>0.625000</td>
-      <td>0.067797</td>
-      <td>0.041667</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.166667</td>
-      <td>0.416667</td>
-      <td>0.067797</td>
-      <td>0.041667</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.111111</td>
-      <td>0.500000</td>
-      <td>0.050847</td>
-      <td>0.041667</td>
-      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.083333</td>
-      <td>0.458333</td>
-      <td>0.084746</td>
-      <td>0.041667</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.194444</td>
-      <td>0.666667</td>
-      <td>0.067797</td>
-      <td>0.041667</td>
-      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>...</th>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>145</th>
-      <td>0.666667</td>
-      <td>0.416667</td>
-      <td>0.711864</td>
-      <td>0.916667</td>
-      <td>1.0</td>
+      <th>895</th>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>146</th>
-      <td>0.555556</td>
-      <td>0.208333</td>
-      <td>0.677966</td>
-      <td>0.750000</td>
-      <td>1.0</td>
+      <th>896</th>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>147</th>
-      <td>0.611111</td>
-      <td>0.416667</td>
-      <td>0.711864</td>
-      <td>0.791667</td>
-      <td>1.0</td>
+      <th>897</th>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>148</th>
-      <td>0.527778</td>
-      <td>0.583333</td>
-      <td>0.745763</td>
-      <td>0.916667</td>
-      <td>1.0</td>
+      <th>898</th>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>149</th>
-      <td>0.444444</td>
-      <td>0.416667</td>
-      <td>0.694915</td>
-      <td>0.708333</td>
-      <td>1.0</td>
+      <th>899</th>
+      <td>1</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>150 rows × 5 columns</p>
+<p>900 rows × 2 columns</p>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-da7bd885-ec9e-4d1f-8d6b-c570158a8980')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-f595d2d2-5417-4adc-91a5-14c0e3bf4ef1')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -955,12 +951,12 @@ title="Print to PDF"
 
       <script>
         const buttonEl =
-          document.querySelector('#df-da7bd885-ec9e-4d1f-8d6b-c570158a8980 button.colab-df-convert');
+          document.querySelector('#df-f595d2d2-5417-4adc-91a5-14c0e3bf4ef1 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-da7bd885-ec9e-4d1f-8d6b-c570158a8980');
+          const element = document.querySelector('#df-f595d2d2-5417-4adc-91a5-14c0e3bf4ef1');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -981,140 +977,22 @@ title="Print to PDF"
   </div>
 </div></div>
 </div>
-<p><strong>K-Means model with three clusters</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
-
-<span class="c1"># Fit K-means with Scikit</span>
-<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
-
-<span class="c1"># Predict the cluster for all the samples</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-
-<span class="n">pred</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/local/lib/python3.7/dist-packages/sklearn/utils/validation.py:1692: FutureWarning: Feature names only support names that are all strings. Got feature names with dtypes: [&#39;tuple&#39;]. An error will be raised in 1.2.
-  FutureWarning,
-/usr/local/lib/python3.7/dist-packages/sklearn/utils/validation.py:1692: FutureWarning: Feature names only support names that are all strings. Got feature names with dtypes: [&#39;tuple&#39;]. An error will be raised in 1.2.
-  FutureWarning,
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>K-Means model parameters study</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.19611111, 0.595     , 0.07830508, 0.06083333, 0.        ],
-       [0.63555556, 0.40583333, 0.77152542, 0.8025    , 1.        ],
-       [0.45444444, 0.32083333, 0.55254237, 0.51083333, 0.5       ]])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_rata_rata_overdue</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;rata_rata_overdue&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span><span class="o">.</span><span class="n">inertia_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.801559361268047
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">7.801559361268047</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.801559361268047
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Check quality of weak classification by the model</strong></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], dtype=int32)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
-
-<span class="c1"># check how many of the samples were correctly labeled</span>
-<span class="n">correct_labels</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Result: </span><span class="si">%d</span><span class="s2"> out of </span><span class="si">%d</span><span class="s2"> samples were correctly labeled.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">correct_labels</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Result: 50 out of 150 samples were correctly labeled.
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy score: </span><span class="si">{0:0.2f}</span><span class="s1">&#39;</span><span class="o">.</span> <span class="nb">format</span><span class="p">(</span><span class="n">correct_labels</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.33
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy score: </span><span class="si">{0:0.2f}</span><span class="s1">&#39;</span><span class="o">.</span> <span class="nb">format</span><span class="p">(</span><span class="n">correct_labels</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.33
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">df2</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred</span>
-<span class="n">df2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_rata_rata_overdue</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-  <div id="df-ea56abb3-3b7c-4c2a-a4f3-a396a6042ce2">
+  <div id="df-af8c1f06-ab9c-49aa-8d5a-0aaefe827a97">
     <div class="colab-df-container">
       <div>
 <style scoped>
@@ -1126,127 +1004,122 @@ title="Print to PDF"
         vertical-align: top;
     }
 
-    .dataframe thead tr th {
-        text-align: left;
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
-    <tr>
+    <tr style="text-align: right;">
       <th></th>
-      <th>sepal.length</th>
-      <th>sepal.width</th>
-      <th>petal.length</th>
-      <th>petal.width</th>
-      <th>variety</th>
-      <th>cluster</th>
+      <th>rata_rata_overdue</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.222222</td>
-      <td>0.625000</td>
-      <td>0.067797</td>
-      <td>0.041667</td>
-      <td>0.0</td>
-      <td>0</td>
+      <td>61 - 90 days</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.166667</td>
-      <td>0.416667</td>
-      <td>0.067797</td>
-      <td>0.041667</td>
-      <td>0.0</td>
-      <td>0</td>
+      <td>61 - 90 days</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.111111</td>
-      <td>0.500000</td>
-      <td>0.050847</td>
-      <td>0.041667</td>
-      <td>0.0</td>
-      <td>0</td>
+      <td>0 - 30 days</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.083333</td>
-      <td>0.458333</td>
-      <td>0.084746</td>
-      <td>0.041667</td>
-      <td>0.0</td>
-      <td>0</td>
+      <td>46 - 60 days</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.194444</td>
-      <td>0.666667</td>
-      <td>0.067797</td>
-      <td>0.041667</td>
-      <td>0.0</td>
-      <td>0</td>
+      <td>31 - 45 days</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <th>5</th>
+      <td>0 - 30 days</td>
     </tr>
     <tr>
-      <th>145</th>
-      <td>0.666667</td>
-      <td>0.416667</td>
-      <td>0.711864</td>
-      <td>0.916667</td>
-      <td>1.0</td>
-      <td>1</td>
+      <th>6</th>
+      <td>31 - 45 days</td>
     </tr>
     <tr>
-      <th>146</th>
-      <td>0.555556</td>
-      <td>0.208333</td>
-      <td>0.677966</td>
-      <td>0.750000</td>
-      <td>1.0</td>
-      <td>1</td>
+      <th>7</th>
+      <td>31 - 45 days</td>
     </tr>
     <tr>
-      <th>147</th>
-      <td>0.611111</td>
-      <td>0.416667</td>
-      <td>0.711864</td>
-      <td>0.791667</td>
-      <td>1.0</td>
-      <td>1</td>
+      <th>8</th>
+      <td>31 - 45 days</td>
     </tr>
     <tr>
-      <th>148</th>
-      <td>0.527778</td>
-      <td>0.583333</td>
-      <td>0.745763</td>
-      <td>0.916667</td>
-      <td>1.0</td>
-      <td>1</td>
+      <th>9</th>
+      <td>31 - 45 days</td>
     </tr>
     <tr>
-      <th>149</th>
-      <td>0.444444</td>
-      <td>0.416667</td>
-      <td>0.694915</td>
-      <td>0.708333</td>
-      <td>1.0</td>
-      <td>1</td>
+      <th>10</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0 - 30 days</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0 - 30 days</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0 - 30 days</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>31 - 45 days</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>0 - 30 days</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>0 - 30 days</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>0 - 30 days</td>
     </tr>
   </tbody>
 </table>
-<p>150 rows × 6 columns</p>
 </div>
-      <button class="colab-df-convert" onclick="convertToInteractive('df-ea56abb3-3b7c-4c2a-a4f3-a396a6042ce2')"
+      <button class="colab-df-convert" onclick="convertToInteractive('df-af8c1f06-ab9c-49aa-8d5a-0aaefe827a97')"
               title="Convert this dataframe to an interactive table."
               style="display:none;">
 
@@ -1297,12 +1170,12 @@ title="Print to PDF"
 
       <script>
         const buttonEl =
-          document.querySelector('#df-ea56abb3-3b7c-4c2a-a4f3-a396a6042ce2 button.colab-df-convert');
+          document.querySelector('#df-af8c1f06-ab9c-49aa-8d5a-0aaefe827a97 button.colab-df-convert');
         buttonEl.style.display =
           google.colab.kernel.accessAllowed ? 'block' : 'none';
 
         async function convertToInteractive(key) {
-          const element = document.querySelector('#df-ea56abb3-3b7c-4c2a-a4f3-a396a6042ce2');
+          const element = document.querySelector('#df-af8c1f06-ab9c-49aa-8d5a-0aaefe827a97');
           const dataTable =
             await google.colab.kernel.invokeFunction('convertToInteractive',
                                                      [key], {});
@@ -1323,6 +1196,534 @@ title="Print to PDF"
   </div>
 </div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rata_rata_overdue</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">data_rata_rata_overdue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rata_rata_overdue</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-7e5e5e92-9af5-4f2e-a196-f3365ad27320">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>rata_rata_overdue_0 - 30 days</th>
+      <th>rata_rata_overdue_31 - 45 days</th>
+      <th>rata_rata_overdue_46 - 60 days</th>
+      <th>rata_rata_overdue_61 - 90 days</th>
+      <th>rata_rata_overdue_&gt; 90 days</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>895</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>896</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>897</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>898</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>899</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>900 rows × 5 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-7e5e5e92-9af5-4f2e-a196-f3365ad27320')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-7e5e5e92-9af5-4f2e-a196-f3365ad27320 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-7e5e5e92-9af5-4f2e-a196-f3365ad27320');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_olah</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">kpr_aktif</span><span class="p">,</span> <span class="n">rata_rata_overdue</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_hasil</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data_asli</span><span class="p">,</span> <span class="n">data_olah</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_hasil</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+  <div id="df-b8d8a05f-ce71-4e47-911c-7a297abedb89">
+    <div class="colab-df-container">
+      <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>kode_kontrak</th>
+      <th>pendapatan_setahun_juta</th>
+      <th>durasi_pinjaman_bulan</th>
+      <th>jumlah_tanggungan</th>
+      <th>risk_rating</th>
+      <th>kpr_aktif_TIDAK</th>
+      <th>kpr_aktif_YA</th>
+      <th>rata_rata_overdue_0 - 30 days</th>
+      <th>rata_rata_overdue_31 - 45 days</th>
+      <th>rata_rata_overdue_46 - 60 days</th>
+      <th>rata_rata_overdue_61 - 90 days</th>
+      <th>rata_rata_overdue_&gt; 90 days</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>AGR-000001</td>
+      <td>295</td>
+      <td>48</td>
+      <td>5</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>AGR-000011</td>
+      <td>271</td>
+      <td>36</td>
+      <td>5</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>AGR-000030</td>
+      <td>159</td>
+      <td>12</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>AGR-000043</td>
+      <td>210</td>
+      <td>12</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>AGR-000049</td>
+      <td>165</td>
+      <td>36</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>895</th>
+      <td>896</td>
+      <td>AGR-010739</td>
+      <td>112</td>
+      <td>48</td>
+      <td>5</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>896</th>
+      <td>897</td>
+      <td>AGR-010744</td>
+      <td>120</td>
+      <td>48</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>897</th>
+      <td>898</td>
+      <td>AGR-010758</td>
+      <td>166</td>
+      <td>24</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>898</th>
+      <td>899</td>
+      <td>AGR-010775</td>
+      <td>196</td>
+      <td>48</td>
+      <td>0</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>899</th>
+      <td>900</td>
+      <td>AGR-010790</td>
+      <td>204</td>
+      <td>24</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>900 rows × 13 columns</p>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-b8d8a05f-ce71-4e47-911c-7a297abedb89')"
+              title="Convert this dataframe to an interactive table."
+              style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px">
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z"/><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z"/>
+  </svg>
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-b8d8a05f-ce71-4e47-911c-7a297abedb89 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-b8d8a05f-ce71-4e47-911c-7a297abedb89');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+</div></div>
+</div>
+<p><strong>Normalisasi</strong></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1352,19 +1753,12 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Naive%20Bayes%20Classifer.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="Uts.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Naive Bayes Classifer</p>
+            <p class="prev-next-title">Uts</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="Discision%20Tree.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Discision Tree</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
